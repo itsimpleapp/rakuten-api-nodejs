@@ -1,0 +1,11 @@
+{
+    "name": "rakuten-api",
+    "version": "0.0.1",
+    "description": "API integration with Rakuten",
+    "author": "André Ferreira <andrehrf@gmail.com>",
+    "main": "index.js",
+    "dependencies": {
+        "request": "^2.72.0",
+        "xml-jsonify": "^1.0.1"
+    }
+}

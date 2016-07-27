@@ -1,5 +1,8 @@
 # Rakuten Linkshare API
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/andrehrf/rakuten-api-nodejs/master/LICENSE)
+[![npm version](https://badge.fury.io/js/rakuten-api.svg)](https://badge.fury.io/js/rakuten-api)
+
 API integration with Rakuten Linkshare
 
 ## Install

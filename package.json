@@ -1,11 +1,20 @@
 {
     "name": "rakuten-api",
-    "version": "0.0.1",
+    "version": "0.1.4",
     "description": "API integration with Rakuten",
     "author": "André Ferreira <andrehrf@gmail.com>",
     "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andrehrf/rakuten-api-nodejs"
+    },
+    "bugs": {
+        "url": "https://github.com/andrehrf/rakuten-api-nodejs/issues"
+    },
+    "homepage": "https://github.com/andrehrf/rakuten-api-nodejs",
     "dependencies": {
         "request": "^2.72.0",
-        "xml-jsonify": "^1.0.1"
+        "xml-jsonify": "^1.0.1",
+        "csv-string": "^2.3.0"
     }
 }

@@ -78,6 +78,18 @@ module.exports = function(user, pass, sid, authorization){
         },
         
         /**
+         * Function to encode URL
+         * 
+         * @see http://locutus.io/php/url/urlencode/
+         * @param str
+         * @return str
+         */
+        urlencode: function(str){
+            str = (str + '');
+            return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+')
+        },
+        
+        /**
          * Get advertiser programs
          *
          * @see https://developers.rakutenmarketing.com/subscribe/apis/info?name=AdvertiserSearch&version=1.0&provider=LinkShare&
@@ -146,21 +158,41 @@ module.exports = function(user, pass, sid, authorization){
         /**
          * Returns basic statistics of clicks, views, leads and sales
          * 
-         * @see https://developer.zanox.com/web/guest/publisher-api-2011/get-reportbasic
-         * @param string securitytoken Security Token provided in the Publisher Dashboard
-         * @param integer reportid Numeric representation of desired report (Sales and Activity ['4'], Revenue ['5'], Link Type ['6'], Individual Items ['7'], Product Success ['8'], Program Level ['9'], Non-Commissionable Sales ['10'], Signature Activity ['11'], Signature Orders ['12'], or Media Optimization ['14']
-         * @param string bdate Start Date for Report (Format: YYYYMMDD)
-         * @param string edate End Date for Report (Format: YYYYMMDD)
+         * @param string reportname 
+         * @param string token Security Token provided in the Report Generate
+         * @param string bdate Start Date for Report (Format: YYYY-MM-DD)
+         * @param string edate End Date for Report (Format: YYYY-MM-DD)
          * @param function cb
          */
-        report: function(securitytoken, reportid, bdate, edate, cb) {
+        report: function(reportname, token, bdate, edate, cb) {
             var _this = this;
             
-            this.createtoken(function(token){        
-                let URL = _this.createurl("https://api.rakutenmarketing.com/advancedreports/1.0", {token: securitytoken, reportid: reportid, bdate: bdate, edate: edate});
-                console.log(URL);
-                _this.getinapi(URL, token, cb);
+            request("https://ran-reporting.rakutenmarketing.com/pt/reports/" + reportname + "/filters/start-date/" + startDate + "/end-date/" + endDate + "?include_summary=Y&network=8&tz=GMT&date_type=transaction&token=" + token , (error, response, body) => { 
+                if(error){
+                    cb(error, null);
+                }
+                else{
+                    var CSVConverter = require("csv-string");            
+                    var docs = CSVConverter.parse(body);                    
+                    cb(false, docs);
+                }
             });
         },
+        
+        /**
+         * Create tracking links
+         * 
+         * @param string url
+         * @param integer adspace
+         * @return void
+         */
+        deeplink: function(url, rid, storeid, cb){
+            request("http://click.linksynergy.com/deeplink?id="+rid+"&mid="+storeid+"&murl=" + this.urlencode(url), (error, response, body) => { 
+                if(error)
+                    cb(error, null);                
+                else
+                    cb(false, "http://click.linksynergy.com/deeplink?id="+rid+"&mid="+storeid+"&murl=" + this.urlencode(url));  
+            });
+        }
     }
 }

@@ -23,7 +23,7 @@ $ npm install rakuten-api
 ```js
 "use strict";
 
-let Rakuten = require("./index.js"),
+let Rakuten = require("rakuten-api"),
     rakuten = new Rakuten("user", "pass", "affid", "auth basic");
 
 rakuten.programs({}, function(err, result){

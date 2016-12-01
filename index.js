@@ -174,7 +174,7 @@ module.exports = function(user, pass, sid, authorization){
          * @param string edate End Date for Report (Format: YYYY-MM-DD)
          * @param function cb
          */
-        report: function(reportname, token, bdate, edate, cb) {
+        report: function(reportname, token, startDate, endDate, cb) {
             var _this = this;
             
             request("https://ran-reporting.rakutenmarketing.com/pt/reports/" + reportname + "/filters?start_date=" + startDate + "&end_date=" + endDate + "&include_summary=Y&network=8&tz=GMT&date_type=transaction&token=" + token , (error, response, body) => { 

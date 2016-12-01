@@ -159,6 +159,16 @@ module.exports = function(user, pass, sid, authorization){
          * Returns basic statistics of clicks, views, leads and sales
          * 
          * @param string reportname 
+         * individual-item-report - Returns a detailed sales by product
+         * link-type-report - Returns a sales summary by link type
+         * media-optimization-report - Returns sales summary for media optimization
+         * offer-report - Returns sales summary grouped by offer
+         * product-success-report - Returns list of products that had a positive result in sales
+         * revenue-report-by-day - Returns summary of sales per day
+         * revenue-report-by-month - Returns summary of sales per month
+         * sales-and-activity-report - Returns summary of sales and activities by advertiser
+         * signature-activity-report
+         * signature-orders-report
          * @param string token Security Token provided in the Report Generate
          * @param string bdate Start Date for Report (Format: YYYY-MM-DD)
          * @param string edate End Date for Report (Format: YYYY-MM-DD)
@@ -167,7 +177,7 @@ module.exports = function(user, pass, sid, authorization){
         report: function(reportname, token, bdate, edate, cb) {
             var _this = this;
             
-            request("https://ran-reporting.rakutenmarketing.com/pt/reports/" + reportname + "/filters/start-date/" + startDate + "/end-date/" + endDate + "?include_summary=Y&network=8&tz=GMT&date_type=transaction&token=" + token , (error, response, body) => { 
+            request("https://ran-reporting.rakutenmarketing.com/pt/reports/" + reportname + "/filters?start_date=" + startDate + "&end_date=" + endDate + "&include_summary=Y&network=8&tz=GMT&date_type=transaction&token=" + token , (error, response, body) => { 
                 if(error){
                     cb(error, null);
                 }
